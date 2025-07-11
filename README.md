@@ -153,12 +153,8 @@ If the environment variable is set, it will disable the input in the user settin
 
 #### 2. SQL Setup
 
-In the 1st migration file `supabase/migrations/20240108234540_setup.sql` you will need to replace 2 values with the values you got above:
-
-- `project_url` (line 53): `http://supabase_kong_chatbotui:8000` (default) can remain unchanged if you don't change your `project_id` in the `config.toml` file
-- `service_role_key` (line 54): You got this value from running `supabase status`
-
-This prevents issues with storage files not being deleted properly.
+The migrations now delete storage objects directly from the database so no additional
+configuration is required. Simply run the migrations using the Supabase CLI.
 
 ### 5. Install Ollama (optional for local models)
 
@@ -226,12 +222,8 @@ We recommend turning off "Confirm email" for your own personal instance.
 
 #### 4. Connect to Hosted DB
 
-Open up your repository for your hosted instance of Chatbot UI.
-
-In the 1st migration file `supabase/migrations/20240108234540_setup.sql` you will need to replace 2 values with the values you got above:
-
-- `project_url` (line 53): Use the `Project URL` value from above
-- `service_role_key` (line 54): Use the `Service role key` value from above
+Open up your repository for your hosted instance of Chatbot UI and run the migrations.
+No manual edits of the migration files are necessary.
 
 Now, open a terminal in the root directory of your local Chatbot UI repository. We will execute a few commands here.
 
