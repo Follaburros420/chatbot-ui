@@ -7,6 +7,7 @@ export type LLMID =
   | MistralLLMID
   | GroqLLMID
   | PerplexityLLMID
+  | AgenteLLMID
 
 // OpenAI Models (UPDATED 5/13/24)
 export type OpenAILLMID =
@@ -79,3 +80,6 @@ export interface LLM {
 export interface OpenRouterLLM extends LLM {
   maxContext: number
 }
+
+// Agente especializado model
+export type AgenteLLMID = "agente-especializado"

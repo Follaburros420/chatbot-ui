@@ -5,7 +5,14 @@ import { LLM_LIST_MAP } from "./llm/llm-list"
 
 export const fetchHostedModels = async (profile: Tables<"profiles">) => {
   try {
-    const providers = ["google", "anthropic", "mistral", "groq", "perplexity"]
+    const providers = [
+      "google",
+      "anthropic",
+      "mistral",
+      "groq",
+      "perplexity",
+      "agente"
+    ]
 
     if (profile.use_azure_openai) {
       providers.push("azure")
@@ -24,6 +31,14 @@ export const fetchHostedModels = async (profile: Tables<"profiles">) => {
     let modelsToAdd: LLM[] = []
 
     for (const provider of providers) {
+      if (provider === "agente") {
+        const models = LLM_LIST_MAP[provider]
+        if (Array.isArray(models)) {
+          modelsToAdd.push(...models)
+        }
+        continue
+      }
+
       let providerKey: keyof typeof profile
 
       if (provider === "google") {
