@@ -5,7 +5,7 @@ import { Input } from "../ui/input"
 interface SidebarSearchProps {
   contentType: ContentType
   searchTerm: string
-  setSearchTerm: Function
+  setSearchTerm: (term: string) => void; // Updated type annotation
 }
 
 export const SidebarSearch: FC<SidebarSearchProps> = ({
@@ -15,9 +15,9 @@ export const SidebarSearch: FC<SidebarSearchProps> = ({
 }) => {
   return (
     <Input
-      placeholder={`Search ${contentType}...`}
+placeholder={`Buscar ${contentType}...`}
       value={searchTerm}
-      onChange={e => setSearchTerm(e.target.value)}
+onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)} // Added type annotation
     />
   )
 }

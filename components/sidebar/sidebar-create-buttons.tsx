@@ -38,10 +38,10 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
     if (!profile) return
     if (!selectedWorkspace) return
 
-    const createdFolder = await createFolder({
-      user_id: profile.user_id,
-      workspace_id: selectedWorkspace.id,
-      name: "New Folder",
+const createdFolder = await createFolder({
+  user_id: profile.user_id,
+  workspace_id: selectedWorkspace.id,
+  name: "Nueva Carpeta",
       description: "",
       type: contentType
     })
@@ -99,7 +99,7 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
     <div className="flex w-full space-x-2">
       <Button className="flex h-[36px] grow" onClick={getCreateFunction()}>
         <IconPlus className="mr-1" size={20} />
-        New{" "}
+Nuevo{" "}
         {contentType.charAt(0).toUpperCase() +
           contentType.slice(1, contentType.length - 1)}
       </Button>
