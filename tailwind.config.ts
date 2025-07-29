@@ -49,7 +49,12 @@ module.exports = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
-        }
+        },
+        // ALI Legal Theme Colors
+        'legal-gold': 'hsl(var(--legal-gold))',
+        'legal-navy': 'hsl(var(--legal-navy))',
+        'legal-blue': 'hsl(var(--legal-blue))',
+        'legal-gray': 'hsl(var(--legal-gray))'
       },
       borderRadius: {
         lg: 'var(--radius)',

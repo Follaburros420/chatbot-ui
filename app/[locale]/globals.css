@@ -30,67 +30,85 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* ALI Legal Theme - Light Mode */
+    --background: 0 0% 98%;
+    --foreground: 220 13% 18%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover-foreground: 220 13% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 220 13% 18%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    /* Legal Professional Blue */
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 220 13% 18%;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    /* Gold accent for premium feel */
+    --accent: 43 74% 66%;
+    --accent-foreground: 220 13% 18%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --ring: 0 0% 63.9%;
+    --ring: 221 83% 53%;
 
-    --radius: 0.5rem;
+    /* Legal-themed custom colors */
+    --legal-gold: 43 74% 66%;
+    --legal-navy: 220 13% 18%;
+    --legal-blue: 221 83% 53%;
+    --legal-gray: 215 16% 47%;
+
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    /* ALI Legal Theme - Dark Mode */
+    --background: 220 13% 9%;
+    --foreground: 210 40% 98%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 220 13% 15%;
+    --muted-foreground: 215 16% 65%;
 
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 13% 9%;
+    --popover-foreground: 210 40% 98%;
 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 13% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
+    --border: 220 13% 18%;
+    --input: 220 13% 18%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    /* Legal Professional Blue - adjusted for dark mode */
+    --primary: 221 83% 63%;
+    --primary-foreground: 220 13% 9%;
 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 210 40% 98%;
 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    /* Gold accent for premium feel - adjusted for dark mode */
+    --accent: 43 74% 56%;
+    --accent-foreground: 220 13% 9%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 210 40% 98%;
 
-    --ring: 0 0% 14.9%;
+    --ring: 221 83% 63%;
+
+    /* Legal-themed custom colors - dark mode */
+    --legal-gold: 43 74% 56%;
+    --legal-navy: 210 40% 98%;
+    --legal-blue: 221 83% 63%;
+    --legal-gray: 215 16% 65%;
   }
 }
 
@@ -100,5 +118,75 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ALI Legal Assistant Custom Styles */
+@layer components {
+  .ali-gradient {
+    background: linear-gradient(135deg, hsl(var(--legal-blue)) 0%, hsl(var(--legal-gold)) 100%);
+  }
+
+  .ali-card {
+    @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  .ali-button-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .ali-button-gold {
+    background: linear-gradient(135deg, hsl(var(--legal-gold)) 0%, hsl(var(--legal-gold)) 100%);
+    @apply text-legal-navy hover:opacity-90 transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .ali-text-gradient {
+    background: linear-gradient(135deg, hsl(var(--legal-blue)) 0%, hsl(var(--legal-gold)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .ali-animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .ali-animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  .ali-animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
