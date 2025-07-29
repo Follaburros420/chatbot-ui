@@ -12,7 +12,7 @@ import { useSubscription } from "@/lib/hooks/use-subscription"
 import { IconUser, IconSettings, IconCreditCard, IconLogout, IconBell, IconChevronDown } from "@tabler/icons-react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/navigation"
-import { supabase } from "@/lib/supabase/browser-client"
+import { createClient } from "@supabase/supabase-js"
 import Link from "next/link"
 
 export const DashboardHeader = () => {
@@ -23,6 +23,10 @@ export const DashboardHeader = () => {
   const [notifications] = useState(0) // Placeholder for notifications
 
   const handleSignOut = async () => {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
     await supabase.auth.signOut()
     router.push("/")
   }

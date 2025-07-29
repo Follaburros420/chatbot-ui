@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { IconCheck, IconStar, IconLoader2 } from "@tabler/icons-react"
 import { useTranslation } from "react-i18next"
-import { getSubscriptionPlans, getUserSubscription, type SubscriptionPlan, type UserSubscription } from "@/db/subscriptions"
+import { getSubscriptionPlans, type SubscriptionPlan, type UserSubscriptionWithPlan } from "@/db/subscriptions"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 interface SubscriptionPlansProps {
   userId?: string
-  currentSubscription?: UserSubscription | null
+  currentSubscription?: UserSubscriptionWithPlan | null
   onPlanSelect?: (plan: SubscriptionPlan) => void
 }
 
@@ -179,11 +179,10 @@ export const SubscriptionPlans = ({
 
 // Usage Stats Component
 interface UsageStatsProps {
-  subscription: UserSubscription | null
+  subscription: UserSubscriptionWithPlan | null
 }
 
 export const UsageStats = ({ subscription }: UsageStatsProps) => {
-  const { t } = useTranslation()
 
   if (!subscription) {
     return (
@@ -193,7 +192,7 @@ export const UsageStats = ({ subscription }: UsageStatsProps) => {
     )
   }
 
-  const plan = subscription.subscription_plans as any
+  const plan = subscription.subscription_plans
   const consultationsLimit = plan?.max_consultations
   const documentsLimit = plan?.max_documents
 

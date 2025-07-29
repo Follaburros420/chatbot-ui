@@ -2,22 +2,23 @@
 
 import { useState, useEffect, useContext } from "react"
 import { ChatbotUIContext } from "@/context/context"
-import { 
-  getUserSubscription, 
-  checkUsageLimit, 
+import {
+  getUserSubscription,
+  checkUsageLimit,
   incrementUsage,
   getUserUsageStats,
   isSubscriptionActive,
   isTrialActive,
   getDaysUntilExpiry,
   type UserSubscription,
+  type UserSubscriptionWithPlan,
   type SubscriptionPlan
 } from "@/db/subscriptions"
 import { toast } from "sonner"
 
 export const useSubscription = () => {
   const { profile } = useContext(ChatbotUIContext)
-  const [subscription, setSubscription] = useState<UserSubscription | null>(null)
+  const [subscription, setSubscription] = useState<UserSubscriptionWithPlan | null>(null)
   const [loading, setLoading] = useState(true)
   const [usageStats, setUsageStats] = useState<any>(null)
 

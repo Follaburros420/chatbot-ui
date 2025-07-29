@@ -14,6 +14,11 @@ export type UserSubscription = Tables<"user_subscriptions">
 export type PaymentHistory = Tables<"payment_history">
 export type UsageTracking = Tables<"usage_tracking">
 
+// Extended type for subscription with plan details
+export type UserSubscriptionWithPlan = UserSubscription & {
+  subscription_plans?: SubscriptionPlan
+}
+
 // Subscription Plans
 export const getSubscriptionPlans = async () => {
   const supabase = getSupabaseClient()
@@ -47,7 +52,7 @@ export const getSubscriptionPlanById = async (planId: string) => {
 }
 
 // User Subscriptions
-export const getUserSubscription = async (userId: string) => {
+export const getUserSubscription = async (userId: string): Promise<UserSubscriptionWithPlan | null> => {
   const supabase = getSupabaseClient()
   const { data: subscription, error } = await supabase
     .from("user_subscriptions")
@@ -63,7 +68,7 @@ export const getUserSubscription = async (userId: string) => {
     throw new Error(error.message)
   }
 
-  return subscription
+  return subscription as UserSubscriptionWithPlan | null
 }
 
 export const createUserSubscription = async (
