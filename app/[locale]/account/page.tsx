@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { SubscriptionPlans, UsageStats } from "@/components/subscription/subscription-plans"
 import { useSubscription } from "@/lib/hooks/use-subscription"
 import { ChatbotUIContext } from "@/context/context"
-import { IconArrowLeft, IconCreditCard, IconUser, IconSettings, IconBarChart } from "@tabler/icons-react"
+import { IconArrowLeft, IconCreditCard, IconUser, IconSettings, IconChartBar } from "@tabler/icons-react"
 import { useTranslation } from "react-i18next"
 import Link from "next/link"
 
@@ -48,7 +48,7 @@ export default function AccountPage() {
               Suscripción
             </TabsTrigger>
             <TabsTrigger value="usage" className="flex items-center gap-2">
-              <IconBarChart size={16} />
+              <IconChartBar size={16} />
               Uso
             </TabsTrigger>
             <TabsTrigger value="profile" className="flex items-center gap-2">

@@ -1,5 +1,13 @@
-import { supabase } from "@/lib/supabase/browser-client"
-import { Tables, TablesInsert, TablesUpdate } from "@/supabase/types"
+import { createClient } from "@supabase/supabase-js"
+import { Tables, TablesInsert, TablesUpdate, Database } from "@/supabase/types"
+
+// Create a supabase client that works in both browser and server environments
+const getSupabaseClient = () => {
+  return createClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
 
 export type SubscriptionPlan = Tables<"subscription_plans">
 export type UserSubscription = Tables<"user_subscriptions">
@@ -8,6 +16,7 @@ export type UsageTracking = Tables<"usage_tracking">
 
 // Subscription Plans
 export const getSubscriptionPlans = async () => {
+  const supabase = getSupabaseClient()
   const { data: plans, error } = await supabase
     .from("subscription_plans")
     .select("*")
@@ -22,6 +31,7 @@ export const getSubscriptionPlans = async () => {
 }
 
 export const getSubscriptionPlanById = async (planId: string) => {
+  const supabase = getSupabaseClient()
   const { data: plan, error } = await supabase
     .from("subscription_plans")
     .select("*")
@@ -38,6 +48,7 @@ export const getSubscriptionPlanById = async (planId: string) => {
 
 // User Subscriptions
 export const getUserSubscription = async (userId: string) => {
+  const supabase = getSupabaseClient()
   const { data: subscription, error } = await supabase
     .from("user_subscriptions")
     .select(`
@@ -58,6 +69,7 @@ export const getUserSubscription = async (userId: string) => {
 export const createUserSubscription = async (
   subscription: TablesInsert<"user_subscriptions">
 ) => {
+  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from("user_subscriptions")
     .insert(subscription)
@@ -75,6 +87,7 @@ export const updateUserSubscription = async (
   subscriptionId: string,
   updates: TablesUpdate<"user_subscriptions">
 ) => {
+  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from("user_subscriptions")
     .update(updates)
@@ -90,9 +103,10 @@ export const updateUserSubscription = async (
 }
 
 export const cancelUserSubscription = async (subscriptionId: string) => {
+  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from("user_subscriptions")
-    .update({ 
+    .update({
       cancel_at_period_end: true,
       updated_at: new Date().toISOString()
     })
@@ -109,7 +123,8 @@ export const cancelUserSubscription = async (subscriptionId: string) => {
 
 // Usage Tracking
 export const checkUsageLimit = async (userId: string, actionType: string) => {
-  const { data, error } = await supabase.rpc("check_usage_limit", {
+  const supabase = getSupabaseClient()
+  const { data, error } = await (supabase as any).rpc("check_usage_limit", {
     p_user_id: userId,
     p_action_type: actionType
   })
@@ -122,7 +137,8 @@ export const checkUsageLimit = async (userId: string, actionType: string) => {
 }
 
 export const incrementUsage = async (userId: string, actionType: string) => {
-  const { error } = await supabase.rpc("increment_usage", {
+  const supabase = getSupabaseClient()
+  const { error } = await (supabase as any).rpc("increment_usage", {
     p_user_id: userId,
     p_action_type: actionType
   })
@@ -133,6 +149,7 @@ export const incrementUsage = async (userId: string, actionType: string) => {
 }
 
 export const getUserUsageStats = async (userId: string) => {
+  const supabase = getSupabaseClient()
   const { data: subscription, error } = await supabase
     .from("user_subscriptions")
     .select(`
@@ -157,6 +174,7 @@ export const getUserUsageStats = async (userId: string) => {
 
 // Payment History
 export const getUserPaymentHistory = async (userId: string) => {
+  const supabase = getSupabaseClient()
   const { data: payments, error } = await supabase
     .from("payment_history")
     .select("*")
@@ -173,6 +191,7 @@ export const getUserPaymentHistory = async (userId: string) => {
 export const createPaymentRecord = async (
   payment: TablesInsert<"payment_history">
 ) => {
+  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from("payment_history")
     .insert(payment)
@@ -192,6 +211,7 @@ export const getUserUsageHistory = async (
   startDate?: string,
   endDate?: string
 ) => {
+  const supabase = getSupabaseClient()
   let query = supabase
     .from("usage_tracking")
     .select("*")
@@ -221,6 +241,7 @@ export const getUsageStatsByActionType = async (
   startDate?: string,
   endDate?: string
 ) => {
+  const supabase = getSupabaseClient()
   let query = supabase
     .from("usage_tracking")
     .select("*")

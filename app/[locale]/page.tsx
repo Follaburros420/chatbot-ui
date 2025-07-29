@@ -84,7 +84,7 @@ export default function HomePage() {
                 </div>
               </div>
               <p className="text-muted-foreground mb-4 italic">
-                "ALI ha revolucionado mi práctica. Ahora puedo analizar contratos en minutos en lugar de horas."
+                &ldquo;ALI ha revolucionado mi práctica. Ahora puedo analizar contratos en minutos en lugar de horas.&rdquo;
               </p>
               <div className="font-semibold">María Rodríguez</div>
               <div className="text-sm text-muted-foreground">Abogada Corporativa, México</div>
@@ -92,12 +92,12 @@ export default function HomePage() {
 
             <div className="ali-card p-6 text-center">
               <div className="mb-4">
-                <div className="w-16 h-16 bg-legal-gold rounded-full mx-auto flex items-center justify-center text-legal-navy font-bold text-xl">
+                <div className="size-16 bg-legal-gold rounded-full mx-auto flex items-center justify-center text-legal-navy font-bold text-xl">
                   JS
                 </div>
               </div>
               <p className="text-muted-foreground mb-4 italic">
-                "La investigación jurisprudencial que antes me tomaba días, ahora la hago en horas con ALI."
+                &ldquo;La investigación jurisprudencial que antes me tomaba días, ahora la hago en horas con ALI.&rdquo;
               </p>
               <div className="font-semibold">Juan Silva</div>
               <div className="text-sm text-muted-foreground">Socio, Estudio Jurídico, Colombia</div>
@@ -105,12 +105,12 @@ export default function HomePage() {
 
             <div className="ali-card p-6 text-center">
               <div className="mb-4">
-                <div className="w-16 h-16 bg-legal-blue rounded-full mx-auto flex items-center justify-center text-white font-bold text-xl">
+                <div className="size-16 bg-legal-blue rounded-full mx-auto flex items-center justify-center text-white font-bold text-xl">
                   AG
                 </div>
               </div>
               <p className="text-muted-foreground mb-4 italic">
-                "Como abogada independiente, ALI es como tener un equipo completo de investigación legal."
+                &ldquo;Como abogada independiente, ALI es como tener un equipo completo de investigación legal.&rdquo;
               </p>
               <div className="font-semibold">Ana García</div>
               <div className="text-sm text-muted-foreground">Abogada Independiente, Argentina</div>
