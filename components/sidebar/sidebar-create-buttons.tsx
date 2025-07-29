@@ -48,47 +48,39 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
     setFolders([...folders, createdFolder])
   }
 
-  const getCreateFunction = () => {
+  const handleCreateClick = async () => {
     switch (contentType) {
       case "chats":
-        return async () => {
-          handleNewChat()
-        }
+        handleNewChat()
+        break
 
       case "presets":
-        return async () => {
-          setIsCreatingPreset(true)
-        }
+        setIsCreatingPreset(true)
+        break
 
       case "prompts":
-        return async () => {
-          setIsCreatingPrompt(true)
-        }
+        setIsCreatingPrompt(true)
+        break
 
       case "files":
-        return async () => {
-          setIsCreatingFile(true)
-        }
+        setIsCreatingFile(true)
+        break
 
       case "collections":
-        return async () => {
-          setIsCreatingCollection(true)
-        }
+        setIsCreatingCollection(true)
+        break
 
       case "assistants":
-        return async () => {
-          setIsCreatingAssistant(true)
-        }
+        setIsCreatingAssistant(true)
+        break
 
       case "tools":
-        return async () => {
-          setIsCreatingTool(true)
-        }
+        setIsCreatingTool(true)
+        break
 
       case "models":
-        return async () => {
-          setIsCreatingModel(true)
-        }
+        setIsCreatingModel(true)
+        break
 
       default:
         break
@@ -97,7 +89,7 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
 
   return (
     <div className="flex w-full space-x-2">
-      <Button className="flex h-[36px] grow" onClick={getCreateFunction()}>
+      <Button className="flex h-[36px] grow" onClick={handleCreateClick}>
         <IconPlus className="mr-1" size={20} />
         Nuevo{" "}
         {contentType.charAt(0).toUpperCase() +
