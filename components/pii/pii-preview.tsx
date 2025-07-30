@@ -14,7 +14,7 @@ import {
   IconAlertTriangle,
   IconLock
 } from "@tabler/icons-react"
-import { PIIItem, formatPIIType, getPIIStats } from "@/lib/pii"
+import { PIIItem, formatPIIType, getPIIStats } from "@/lib/pii-demo"
 
 interface PIIPreviewProps {
   piiList: PIIItem[]

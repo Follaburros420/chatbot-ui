@@ -7,15 +7,18 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { 
-  IconSend, 
-  IconUser, 
-  IconRobot, 
-  IconSparkles, 
+import { PIIPreview } from "@/components/pii/pii-preview"
+import { usePIIDemo } from "@/lib/hooks/use-pii-demo"
+import {
+  IconSend,
+  IconUser,
+  IconRobot,
+  IconSparkles,
   IconArrowLeft,
   IconShield,
   IconCopy,
-  IconCheck
+  IconCheck,
+  IconAlertTriangle
 } from "@tabler/icons-react"
 import Link from "next/link"
 
@@ -38,7 +41,21 @@ export default function ChatDemoPage() {
   const [inputMessage, setInputMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
+  const [showPIIPreview, setShowPIIPreview] = useState(false)
+  const [pendingMessage, setPendingMessage] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // Hook PII Demo
+  const {
+    isAnonymizing,
+    isDeanonymizing,
+    piiList,
+    anonymizedText,
+    error: piiError,
+    anonymizeText,
+    deanonymizeText,
+    clearPII
+  } = usePIIDemo()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -49,11 +66,42 @@ export default function ChatDemoPage() {
   }, [messages])
 
   const handleSendMessage = async () => {
-    if (!inputMessage.trim() || isLoading) return
+    if (!inputMessage.trim() || isLoading || isAnonymizing) return
 
+    const messageText = inputMessage.trim()
+
+    try {
+      // Intentar anonimizar el mensaje
+      const result = await anonymizeText(messageText)
+
+      if (!result) {
+        // Error en anonimización, enviar mensaje original
+        sendMessageDirectly(messageText)
+        return
+      }
+
+      if (result.piiList.length > 0) {
+        // Se detectó PII, mostrar preview
+        setPendingMessage(messageText)
+        setShowPIIPreview(true)
+        setInputMessage('') // Limpiar input
+      } else {
+        // No hay PII, enviar mensaje directamente
+        sendMessageDirectly(messageText)
+        clearPII()
+      }
+
+    } catch (err) {
+      console.error('Error processing message for PII:', err)
+      // En caso de error, enviar mensaje original
+      sendMessageDirectly(messageText)
+    }
+  }
+
+  const sendMessageDirectly = async (messageText: string, isAnonymized = false) => {
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: inputMessage.trim(),
+      content: isAnonymized ? 'Mensaje protegido enviado' : messageText,
       role: 'user',
       timestamp: new Date()
     }
@@ -62,11 +110,26 @@ export default function ChatDemoPage() {
     setInputMessage('')
     setIsLoading(true)
 
-    // Simular respuesta del chatbot (reemplazar con llamada real a la API)
-    setTimeout(() => {
+    // Simular respuesta del chatbot
+    setTimeout(async () => {
+      let responseContent = generateDemoResponse(isAnonymized ? anonymizedText : messageText)
+
+      // Si el mensaje fue anonimizado, intentar desanonimizar la respuesta
+      if (isAnonymized && piiList.length > 0) {
+        try {
+          const deanonymizedResponse = await deanonymizeText(responseContent)
+          if (deanonymizedResponse) {
+            responseContent = deanonymizedResponse
+          }
+        } catch (err) {
+          console.error('Error deanonymizing response:', err)
+        }
+        clearPII() // Limpiar PII después de usar
+      }
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: generateDemoResponse(userMessage.content),
+        content: responseContent,
         role: 'assistant',
         timestamp: new Date()
       }
@@ -75,9 +138,36 @@ export default function ChatDemoPage() {
     }, 1500)
   }
 
+  const handlePIIConfirm = () => {
+    setShowPIIPreview(false)
+    sendMessageDirectly(pendingMessage, true)
+    setPendingMessage('')
+  }
+
+  const handlePIICancel = () => {
+    setShowPIIPreview(false)
+    setPendingMessage('')
+    setInputMessage(pendingMessage) // Restaurar mensaje en input
+    clearPII()
+  }
+
   const generateDemoResponse = (userInput: string): string => {
     const input = userInput.toLowerCase()
-    
+
+    // Detectar si el input contiene tokens PII
+    const hasPIITokens = /<PII_[A-Z_]+_[a-f0-9]{8}>/.test(userInput)
+
+    if (hasPIITokens) {
+      return `He recibido tu consulta con información personal protegida. Como puedes ver, tus datos sensibles han sido reemplazados por tokens seguros durante el procesamiento.
+
+**Información procesada de forma segura:**
+${userInput}
+
+Ahora puedo ayudarte con tu consulta legal manteniendo tu privacidad protegida. Los datos que compartiste están seguros y solo tú puedes ver los valores reales.
+
+¿En qué aspecto específico de tu consulta legal te gustaría que profundice?`
+    }
+
     if (input.includes('contrato') || input.includes('acuerdo')) {
       return `Entiendo que necesitas ayuda con contratos. Como asistente legal, puedo ayudarte con:
 
@@ -172,7 +262,7 @@ Para brindarte la mejor asistencia, ¿podrías ser más específico sobre tu con
 Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSendMessage()
@@ -189,8 +279,34 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
     }
   }
 
+  // Mostrar PIIPreview si es necesario
+  if (showPIIPreview) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10 flex items-center justify-center p-6">
+        <div className="w-full max-w-2xl">
+          <PIIPreview
+            piiList={piiList}
+            onConfirm={handlePIIConfirm}
+            onCancel={handlePIICancel}
+            loading={isLoading}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
+      {/* PII Error Alert */}
+      {piiError && (
+        <Alert className="mx-4 mt-4 border-red-200 bg-red-50">
+          <IconAlertTriangle className="w-4 h-4 text-red-600" />
+          <AlertDescription className="text-red-800">
+            <strong>Error PII:</strong> {piiError}
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/40 shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
@@ -210,9 +326,9 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
                 Demo Activo
               </Badge>
-              <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+              <Badge className={`${isAnonymizing || isDeanonymizing ? 'bg-orange-100 text-orange-800 border-orange-200' : 'bg-blue-100 text-blue-800 border-blue-200'}`}>
                 <IconShield className="w-3 h-3 mr-1" />
-                PII Protegido
+                {isAnonymizing ? 'Protegiendo...' : isDeanonymizing ? 'Restaurando...' : 'PII Protegido'}
               </Badge>
             </div>
           </div>
@@ -225,9 +341,22 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
         <Alert className="mb-6 border-blue-200 bg-blue-50">
           <IconSparkles className="w-4 h-4 text-blue-600" />
           <AlertDescription className="text-blue-800">
-            <strong>Modo Demo:</strong> Esta es una versión de demostración de ALI. 
-            Las respuestas son simuladas para mostrar las capacidades del sistema. 
+            <strong>Modo Demo:</strong> Esta es una versión de demostración de ALI.
+            Las respuestas son simuladas para mostrar las capacidades del sistema.
             Para acceso completo, <Link href="/es/login" className="underline font-medium">inicia sesión aquí</Link>.
+          </AlertDescription>
+        </Alert>
+
+        {/* PII Demo Notice */}
+        <Alert className="mb-6 border-orange-200 bg-orange-50">
+          <IconShield className="w-4 h-4 text-orange-600" />
+          <AlertDescription className="text-orange-800">
+            <strong>Protección PII Activa:</strong> Prueba escribir datos personales como tu email, teléfono o cédula.
+            ALI detectará automáticamente esta información y te mostrará qué datos serán protegidos antes de enviar tu mensaje.
+            <br />
+            <span className="text-sm mt-2 block">
+              <strong>Ejemplo:</strong> "Mi email es juan@ejemplo.com y mi cédula es CC: 12345678"
+            </span>
           </AlertDescription>
         </Alert>
 
@@ -317,21 +446,56 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyDown}
                 placeholder="Escribe tu consulta legal aquí... (Ej: Necesito ayuda con un contrato laboral)"
                 className="flex-1 h-12"
-                disabled={isLoading}
+                disabled={isLoading || isAnonymizing}
               />
               <Button
                 onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || isLoading}
+                disabled={!inputMessage.trim() || isLoading || isAnonymizing}
                 className="ali-button-primary h-12 px-6"
               >
-                <IconSend className="w-4 h-4" />
+                {isAnonymizing ? (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <IconSend className="w-4 h-4" />
+                )}
               </Button>
             </div>
             <div className="mt-2 text-xs text-muted-foreground text-center">
               Presiona Enter para enviar • Shift + Enter para nueva línea
+            </div>
+
+            {/* PII Test Suggestions */}
+            <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+              <p className="text-xs font-medium text-muted-foreground mb-2">💡 Prueba el sistema de protección PII:</p>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-xs h-7 px-2"
+                  onClick={() => setInputMessage("Mi email es juan.perez@ejemplo.com y necesito ayuda legal")}
+                >
+                  Probar con Email
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-xs h-7 px-2"
+                  onClick={() => setInputMessage("Mi cédula es CC: 12345678 y mi teléfono +57 300 123 4567")}
+                >
+                  Probar con Cédula y Teléfono
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-xs h-7 px-2"
+                  onClick={() => setInputMessage("Soy Dr. María González, mi dirección es Calle 123 #45-67")}
+                >
+                  Probar con Nombre y Dirección
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
