@@ -26,8 +26,8 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   } = useContext(ChatbotUIContext)
 
   const router = useRouter()
-  const params = useParams()
-  const isActive = params.chatid === chat.id || selectedChat?.id === chat.id
+  const params = useParams<{ chatid?: string }>()
+  const isActive = params?.chatid === chat.id || selectedChat?.id === chat.id
 
   const itemRef = useRef<HTMLDivElement>(null)
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { PIIPreview } from '@/components/pii/pii-preview'
 import { usePII } from '@/lib/hooks/use-pii'
 import { Alert, AlertDescription } from '@/components/ui/alert'

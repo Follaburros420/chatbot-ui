@@ -71,7 +71,7 @@ export default function AuthCodeErrorPage() {
                 Detalles del Error:
               </h3>
               <p className="text-sm text-muted-foreground mb-2">
-                {getErrorMessage(error)}
+                {getErrorMessage(error ?? null)}
               </p>
               {errorDescription && (
                 <p className="text-xs text-muted-foreground italic">
@@ -86,7 +86,7 @@ export default function AuthCodeErrorPage() {
                 ¿Qué puedes hacer?
               </h3>
               <p className="text-sm text-muted-foreground">
-                {getSuggestion(error)}
+                {getSuggestion(error ?? null)}
               </p>
             </div>
 
