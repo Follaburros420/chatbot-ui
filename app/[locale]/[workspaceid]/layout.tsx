@@ -27,9 +27,9 @@ interface WorkspaceLayoutProps {
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const router = useRouter()
 
-  const params = useParams()
+  const params = useParams<{ workspaceid: string }>()
   const searchParams = useSearchParams()
-  const workspaceId = params.workspaceid as string
+  const workspaceId = params?.workspaceid as string
 
   const {
     setChatSettings,
@@ -157,7 +157,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setModels(modelData.models)
 
     setChatSettings({
-      model: (searchParams.get("model") ||
+      model: (searchParams?.get("model") ||
         workspace?.default_model ||
         "gpt-4-1106-preview") as LLMID,
       prompt:

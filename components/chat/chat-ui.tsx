@@ -24,7 +24,8 @@ interface ChatUIProps {}
 export const ChatUI: FC<ChatUIProps> = ({}) => {
   useHotkey("o", () => handleNewChat())
 
-  const params = useParams()
+  const params = useParams<{ chatid?: string }>()
+  const chatId = params?.chatid
 
   const {
     setChatMessages,
@@ -66,7 +67,7 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
       setIsAtBottom(true)
     }
 
-    if (params.chatid) {
+    if (chatId) {
       fetchData().then(() => {
         handleFocusChatInput()
         setLoading(false)
@@ -77,7 +78,8 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
   }, [])
 
   const fetchMessages = async () => {
-    const fetchedMessages = await getMessagesByChatId(params.chatid as string)
+    if (!chatId) return
+    const fetchedMessages = await getMessagesByChatId(chatId as string)
 
     const imagePromises: Promise<MessageImage>[] = fetchedMessages.flatMap(
       message =>
@@ -122,7 +124,8 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
     const uniqueFileItems = messageFileItems.flatMap(item => item.file_items)
     setChatFileItems(uniqueFileItems)
 
-    const chatFiles = await getChatFilesByChatId(params.chatid as string)
+    if (!chatId) return
+    const chatFiles = await getChatFilesByChatId(chatId as string)
 
     setChatFiles(
       chatFiles.files.map(file => ({
@@ -151,7 +154,8 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
   }
 
   const fetchChat = async () => {
-    const chat = await getChatById(params.chatid as string)
+    if (!chatId) return
+    const chat = await getChatById(chatId as string)
     if (!chat) return
 
     if (chat.assistant_id) {
