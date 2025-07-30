@@ -115,6 +115,10 @@ export default function HomePage() {
                 Testimonios
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-legal-blue transition-all group-hover:w-full"></span>
               </a>
+              <Link href="/es/chat-demo" className="text-sm font-medium text-legal-gold hover:text-legal-gold/80 transition-colors relative group">
+                Demo Chat
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-legal-gold transition-all group-hover:w-full"></span>
+              </Link>
             </div>
 
             {/* Desktop Auth Buttons */}
@@ -165,7 +169,20 @@ export default function HomePage() {
                 >
                   Testimonios
                 </a>
+                <Link
+                  href="/es/chat-demo"
+                  className="text-sm font-medium text-legal-gold hover:text-legal-gold/80 hover:bg-legal-gold/5 transition-colors py-3 px-2 rounded-lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Demo Chat
+                </Link>
                 <div className="flex flex-col space-y-3 pt-4 mt-2 border-t border-border/40">
+                  <Link href="/es/chat-demo">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-legal-gold text-legal-gold hover:bg-legal-gold hover:text-white font-medium">
+                      <IconMessageCircle className="w-4 h-4 mr-2" />
+                      Probar Demo
+                    </Button>
+                  </Link>
                   <Link href="/es/login">
                     <Button variant="ghost" size="sm" className="w-full justify-start text-legal-blue hover:bg-legal-blue/10 font-medium">
                       Iniciar Sesión
@@ -575,12 +592,12 @@ export default function HomePage() {
       </footer>
 
       {/* Floating Chat Button - Direct Access */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <Link href="/es/chat">
+      <div className="fixed bottom-6 right-6 z-50 group">
+        <Link href="/es/chat-demo">
           <Button
             size="lg"
-            className="ali-button-primary rounded-full w-16 h-16 shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 group"
-            title="Acceso directo al chatbot ALI"
+            className="ali-button-primary rounded-full w-16 h-16 shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300"
+            title="Acceso directo al chatbot ALI (Demo)"
           >
             <div className="relative">
               <IconMessageCircle size={28} className="group-hover:scale-110 transition-transform duration-200" />
@@ -590,22 +607,22 @@ export default function HomePage() {
         </Link>
 
         {/* Tooltip */}
-        <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-legal-navy text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-          Chatbot ALI - Acceso Directo
+        <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-legal-navy text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+          Chatbot ALI - Demo Gratuito
           <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-legal-navy"></div>
         </div>
       </div>
 
       {/* Emergency Access Button for Development */}
       <div className="fixed bottom-6 left-6 z-50">
-        <Link href="/es/chat">
+        <Link href="/es/chat-demo">
           <Button
             variant="outline"
             size="sm"
             className="bg-background/90 backdrop-blur-sm border-legal-blue text-legal-blue hover:bg-legal-blue hover:text-white shadow-lg transition-all duration-200"
           >
             <IconRocket size={16} className="mr-2" />
-            Chat Directo
+            Demo Chat
           </Button>
         </Link>
       </div>

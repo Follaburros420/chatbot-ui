@@ -367,3 +367,78 @@ body {
     opacity: 1;
   }
 }
+
+/* Chat Demo Styles */
+@layer components {
+  .ali-chat-message {
+    @apply max-w-[80%] rounded-lg p-4 transition-all duration-200;
+  }
+
+  .ali-chat-message-user {
+    @apply bg-legal-blue text-white ml-auto;
+  }
+
+  .ali-chat-message-assistant {
+    @apply bg-muted border border-border mr-auto;
+  }
+
+  .ali-chat-input {
+    @apply flex-1 h-12 border-border focus:border-legal-blue focus:ring-legal-blue/20;
+  }
+
+  .ali-chat-send-button {
+    @apply ali-button-primary h-12 px-6 transition-all duration-200;
+  }
+
+  .ali-chat-send-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+  }
+
+  .ali-chat-typing {
+    @apply flex items-center space-x-2 text-muted-foreground;
+  }
+
+  .ali-chat-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--legal-blue)) hsl(var(--muted));
+  }
+
+  .ali-chat-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .ali-chat-scroll::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+
+  .ali-chat-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--legal-blue));
+    border-radius: 3px;
+  }
+
+  .ali-chat-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--legal-gold));
+  }
+}
+
+/* Floating button animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.ali-float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Demo badge pulse */
+@keyframes demo-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.ali-demo-pulse {
+  animation: demo-pulse 2s ease-in-out infinite;
+}

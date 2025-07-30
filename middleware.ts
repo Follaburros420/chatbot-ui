@@ -7,6 +7,37 @@ export async function middleware(request: NextRequest) {
   const i18nResult = i18nRouter(request, i18nConfig)
   if (i18nResult) return i18nResult
 
+  const { pathname } = request.nextUrl
+
+  // Allow access to demo chat without authentication
+  if (pathname.includes('/chat-demo')) {
+    return NextResponse.next({
+      request: {
+        headers: request.headers
+      }
+    })
+  }
+
+  // Allow access to public pages
+  const publicPaths = [
+    '/',
+    '/es',
+    '/en',
+    '/login',
+    '/pricing',
+    '/auth/callback',
+    '/auth/auth-code-error',
+    '/auth/reset-password'
+  ]
+
+  if (publicPaths.some(path => pathname === path || pathname.startsWith(path))) {
+    return NextResponse.next({
+      request: {
+        headers: request.headers
+      }
+    })
+  }
+
   try {
     const { supabase, response } = createClient(request)
 
