@@ -191,62 +191,126 @@
   }
 }
 
-/* Additional Professional Styles */
-@layer components {
-  .ali-hero-gradient {
-    background: linear-gradient(135deg,
-      hsl(var(--legal-blue)) 0%,
-      hsl(var(--legal-blue)) 25%,
-      hsl(var(--legal-gold)) 75%,
-      hsl(var(--legal-gold)) 100%);
+/* Mobile optimizations */
+@layer utilities {
+  .ali-mobile-padding {
+    @apply px-4 sm:px-6 lg:px-8;
   }
 
-  .ali-section-divider {
-    background: linear-gradient(90deg,
-      transparent 0%,
-      hsl(var(--border)) 50%,
-      transparent 100%);
-    height: 1px;
+  .ali-mobile-text {
+    @apply text-sm sm:text-base lg:text-lg;
   }
 
-  .ali-glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  .ali-mobile-heading {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
   }
 
-  .ali-hover-lift {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  .ali-mobile-subheading {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .ali-mobile-button {
+    @apply px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base;
+  }
+
+  .ali-mobile-card {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+
+  .ali-mobile-grid {
+    @apply grid gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  .ali-mobile-space {
+    @apply space-y-4 sm:space-y-6 lg:space-y-8;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .ali-card:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   .ali-hover-lift:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: none;
+    box-shadow: none;
   }
 
-  .ali-text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .ali-smooth-scroll {
-    scroll-behavior: smooth;
+  button:hover {
+    transform: none;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Improved mobile navigation */
+@media (max-width: 768px) {
+  .ali-mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .ali-mobile-menu {
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+/* Better focus states for accessibility */
+@layer base {
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid hsl(var(--legal-blue));
+    outline-offset: 2px;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--legal-blue));
-  border-radius: 4px;
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--legal-gold));
+/* Prevent horizontal scroll on mobile */
+body {
+  overflow-x: hidden;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  .ali-card {
+    @apply rounded-lg;
+  }
+
+  .ali-button-primary,
+  .ali-button-gold {
+    @apply min-h-[44px] text-base;
+  }
+
+  /* Larger touch targets */
+  button,
+  a[role="button"] {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Better spacing on mobile */
+  section {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+
+  /* Improved text readability */
+  p {
+    @apply leading-relaxed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply leading-tight;
+  }
 }
