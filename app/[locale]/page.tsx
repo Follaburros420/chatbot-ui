@@ -17,7 +17,9 @@ import {
   IconSearch,
   IconGavel,
   IconMenu,
-  IconX
+  IconX,
+  IconMessageCircle,
+  IconRocket
 } from "@tabler/icons-react"
 import { useTheme } from "next-themes"
 import { useTranslation } from "react-i18next"
@@ -571,6 +573,42 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Chat Button - Direct Access */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Link href="/es/chat">
+          <Button
+            size="lg"
+            className="ali-button-primary rounded-full w-16 h-16 shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 group"
+            title="Acceso directo al chatbot ALI"
+          >
+            <div className="relative">
+              <IconMessageCircle size={28} className="group-hover:scale-110 transition-transform duration-200" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-legal-gold rounded-full animate-pulse"></div>
+            </div>
+          </Button>
+        </Link>
+
+        {/* Tooltip */}
+        <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-legal-navy text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          Chatbot ALI - Acceso Directo
+          <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-legal-navy"></div>
+        </div>
+      </div>
+
+      {/* Emergency Access Button for Development */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <Link href="/es/chat">
+          <Button
+            variant="outline"
+            size="sm"
+            className="bg-background/90 backdrop-blur-sm border-legal-blue text-legal-blue hover:bg-legal-blue hover:text-white shadow-lg transition-all duration-200"
+          >
+            <IconRocket size={16} className="mr-2" />
+            Chat Directo
+          </Button>
+        </Link>
+      </div>
     </div>
   )
 }
