@@ -26,7 +26,9 @@ module.exports = withBundleAnalyzer({
         }
       ]
     },
-    serverExternalPackages: ["sharp", "onnxruntime-node"],
+    experimental: {
+      serverComponentsExternalPackages: ["sharp", "onnxruntime-node"],
+    },
     webpack: (config, { isServer }) => {
       if (!isServer) {
         config.resolve.fallback = {
