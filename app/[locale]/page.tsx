@@ -93,31 +93,37 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
-      {/* Compact Mobile-Optimized Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/40">
+      {/* Enhanced Mobile-Optimized Navigation */}
+      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-14">
-            <Brand size="sm" />
+          <div className="flex items-center justify-between h-16">
+            <Brand variant="compact" />
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
-              <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-legal-blue transition-colors relative group">
                 Características
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-legal-blue transition-all group-hover:w-full"></span>
               </a>
-              <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-legal-blue transition-colors relative group">
                 Precios
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-legal-blue transition-all group-hover:w-full"></span>
+              </a>
+              <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-legal-blue transition-colors relative group">
+                Testimonios
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-legal-blue transition-all group-hover:w-full"></span>
               </a>
             </div>
 
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center space-x-3">
-              <Link href="/login">
-                <Button variant="ghost" size="sm" className="text-legal-blue hover:text-legal-blue/80">
+              <Link href="/es/login">
+                <Button variant="ghost" size="sm" className="text-legal-blue hover:text-legal-blue/80 hover:bg-legal-blue/10 font-medium">
                   Iniciar Sesión
                 </Button>
               </Link>
-              <Link href="/login">
-                <Button size="sm" className="ali-button-primary">
+              <Link href="/es/login">
+                <Button size="sm" className="ali-button-primary font-medium shadow-md hover:shadow-lg">
                   Crear Cuenta
                 </Button>
               </Link>
@@ -125,39 +131,46 @@ export default function HomePage() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <IconX size={20} /> : <IconMenu size={20} />}
+              {mobileMenuOpen ? <IconX size={22} /> : <IconMenu size={22} />}
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Enhanced Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-border/40">
-              <div className="flex flex-col space-y-3">
+            <div className="md:hidden py-4 border-t border-border/40 bg-background/98 backdrop-blur-sm">
+              <div className="flex flex-col space-y-1">
                 <a
                   href="#features"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="text-sm font-medium text-muted-foreground hover:text-legal-blue hover:bg-legal-blue/5 transition-colors py-3 px-2 rounded-lg"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Características
                 </a>
                 <a
                   href="#pricing"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="text-sm font-medium text-muted-foreground hover:text-legal-blue hover:bg-legal-blue/5 transition-colors py-3 px-2 rounded-lg"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Precios
                 </a>
-                <div className="flex flex-col space-y-2 pt-2 border-t border-border/40">
-                  <Link href="/login">
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-legal-blue">
+                <a
+                  href="#testimonials"
+                  className="text-sm font-medium text-muted-foreground hover:text-legal-blue hover:bg-legal-blue/5 transition-colors py-3 px-2 rounded-lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Testimonios
+                </a>
+                <div className="flex flex-col space-y-3 pt-4 mt-2 border-t border-border/40">
+                  <Link href="/es/login">
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-legal-blue hover:bg-legal-blue/10 font-medium">
                       Iniciar Sesión
                     </Button>
                   </Link>
-                  <Link href="/login">
-                    <Button size="sm" className="w-full ali-button-primary">
+                  <Link href="/es/login">
+                    <Button size="sm" className="w-full ali-button-primary font-medium">
                       Crear Cuenta
                     </Button>
                   </Link>
@@ -190,14 +203,14 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 ali-animate-slide-up px-4">
-            <Link href="/login">
-              <Button size="lg" className="w-full sm:w-auto ali-button-primary px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold">
+            <Link href="/es/login">
+              <Button size="lg" className="w-full sm:w-auto ali-button-primary px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl">
                 Comenzar Prueba Gratuita
                 <IconArrowRight className="ml-2" size={20} />
               </Button>
             </Link>
             <Link href="#pricing">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg border-legal-blue text-legal-blue hover:bg-legal-blue hover:text-white">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg border-legal-blue text-legal-blue hover:bg-legal-blue hover:text-white shadow-md hover:shadow-lg">
                 Ver Planes
               </Button>
             </Link>
@@ -303,9 +316,9 @@ export default function HomePage() {
                   ))}
 
                   <div className="pt-4 sm:pt-6">
-                    <Link href="/login">
+                    <Link href="/es/login">
                       <Button
-                        className={`w-full ${plan.popular ? 'ali-button-primary' : 'ali-button-gold'} py-2 sm:py-3 text-sm sm:text-base lg:text-lg font-semibold`}
+                        className={`w-full ${plan.popular ? 'ali-button-primary shadow-lg hover:shadow-xl' : 'ali-button-gold shadow-md hover:shadow-lg'} py-2 sm:py-3 text-sm sm:text-base lg:text-lg font-semibold transition-all duration-200`}
                         size="lg"
                       >
                         {plan.popular ? 'Comenzar Ahora' : 'Seleccionar Plan'}
@@ -418,13 +431,13 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8">
-            <Link href="/login">
-              <Button size="lg" className="w-full sm:w-auto bg-white text-legal-blue hover:bg-white/90 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold">
+            <Link href="/es/login">
+              <Button size="lg" className="w-full sm:w-auto bg-white text-legal-blue hover:bg-white/90 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl">
                 Comenzar Prueba Gratuita
                 <IconArrowRight className="ml-2" size={20} />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-legal-blue px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg">
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-legal-blue px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg shadow-md hover:shadow-lg">
               Agendar Demo
             </Button>
           </div>
@@ -446,47 +459,115 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer - Mobile Optimized */}
+      {/* Enhanced Footer - Mobile Optimized */}
       <footer className="bg-legal-navy text-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="md:col-span-2">
-              <Brand size="sm" />
-              <p className="text-white/70 mt-3 sm:mt-4 max-w-md text-sm sm:text-base">
+              <div className="mb-4">
+                <Brand variant="compact" />
+              </div>
+              <p className="text-white/70 mt-3 sm:mt-4 max-w-md text-sm sm:text-base leading-relaxed">
                 ALI es el asistente legal inteligente diseñado específicamente para
-                profesionales del derecho en Latinoamérica.
+                profesionales del derecho en Latinoamérica. Potencia tu práctica legal con IA.
               </p>
-              <div className="mt-4 sm:mt-6">
-                <p className="text-xs sm:text-sm text-white/60">
-                  <strong>Aviso Legal:</strong> ALI proporciona información legal general y no constituye
-                  asesoramiento legal profesional. Siempre consulta con un abogado calificado.
+              <div className="mt-4 sm:mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                  <strong className="text-legal-gold">Aviso Legal:</strong> ALI proporciona información legal general y no constituye
+                  asesoramiento legal profesional. Siempre consulta con un abogado calificado para asuntos específicos.
                 </p>
               </div>
             </div>
 
             <div>
-              <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Producto</h3>
-              <ul className="space-y-2 text-white/70 text-sm sm:text-base">
-                <li><a href="#features" className="hover:text-white transition-colors">Características</a></li>
-                <li><a href="#pricing" className="hover:text-white transition-colors">Precios</a></li>
-                <li><a href="/login" className="hover:text-white transition-colors">Iniciar Sesión</a></li>
-                <li><a href="/login" className="hover:text-white transition-colors">Crear Cuenta</a></li>
+              <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-legal-gold">Producto</h3>
+              <ul className="space-y-3 text-white/70 text-sm sm:text-base">
+                <li>
+                  <a href="#features" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Características
+                  </a>
+                </li>
+                <li>
+                  <a href="#pricing" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Precios
+                  </a>
+                </li>
+                <li>
+                  <a href="/es/login" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Iniciar Sesión
+                  </a>
+                </li>
+                <li>
+                  <a href="/es/login" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Crear Cuenta
+                  </a>
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Soporte</h3>
-              <ul className="space-y-2 text-white/70 text-sm sm:text-base">
-                <li><a href="#" className="hover:text-white transition-colors">Centro de Ayuda</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contacto</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Términos de Servicio</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Política de Privacidad</a></li>
+              <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-legal-gold">Soporte</h3>
+              <ul className="space-y-3 text-white/70 text-sm sm:text-base">
+                <li>
+                  <a href="mailto:soporte@ali-legal.com" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Centro de Ayuda
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:contacto@ali-legal.com" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Contacto
+                  </a>
+                </li>
+                <li>
+                  <a href="/terminos" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Términos de Servicio
+                  </a>
+                </li>
+                <li>
+                  <a href="/privacidad" className="hover:text-legal-gold transition-colors flex items-center group">
+                    <span className="w-1 h-1 bg-legal-gold rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Política de Privacidad
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-white/20 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center text-white/60 text-xs sm:text-sm">
-            <p>&copy; 2024 ALI - Asistente Legal Inteligente. Todos los derechos reservados.</p>
+          <div className="border-t border-white/20 mt-8 sm:mt-12 pt-6 sm:pt-8">
+            <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+              <div className="text-center sm:text-left">
+                <p className="text-white/60 text-xs sm:text-sm">
+                  &copy; 2024 ALI - Asistente Legal Inteligente. Todos los derechos reservados.
+                </p>
+                <p className="text-white/40 text-xs mt-1">
+                  Desarrollado con ❤️ para abogados latinoamericanos
+                </p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className="text-white/40 text-xs">Síguenos:</span>
+                <div className="flex space-x-3">
+                  <a href="#" className="text-white/60 hover:text-legal-gold transition-colors">
+                    <span className="sr-only">LinkedIn</span>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                  <a href="#" className="text-white/60 hover:text-legal-gold transition-colors">
+                    <span className="sr-only">Twitter</span>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

@@ -314,3 +314,56 @@ body {
     @apply leading-tight;
   }
 }
+
+/* Enhanced navigation styles */
+@layer components {
+  .ali-nav-link {
+    @apply relative text-sm font-medium text-muted-foreground hover:text-legal-blue transition-all duration-200;
+  }
+
+  .ali-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: hsl(var(--legal-blue));
+    transition: width 0.3s ease;
+  }
+
+  .ali-nav-link:hover::after {
+    width: 100%;
+  }
+
+  .ali-nav-button {
+    @apply transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .ali-nav-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .ali-mobile-menu-item {
+    @apply text-sm font-medium text-muted-foreground hover:text-legal-blue hover:bg-legal-blue/5 transition-all duration-200 py-3 px-3 rounded-lg;
+  }
+
+  .ali-footer-link {
+    @apply hover:text-legal-gold transition-colors flex items-center group;
+  }
+
+  .ali-footer-link::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: hsl(var(--legal-gold));
+    border-radius: 50%;
+    margin-right: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .ali-footer-link:hover::before {
+    opacity: 1;
+  }
+}
