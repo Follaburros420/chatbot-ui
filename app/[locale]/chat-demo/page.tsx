@@ -355,7 +355,7 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
             ALI detectará automáticamente esta información y te mostrará qué datos serán protegidos antes de enviar tu mensaje.
             <br />
             <span className="text-sm mt-2 block">
-              <strong>Ejemplo:</strong> "Mi email es juan@ejemplo.com y mi cédula es CC: 12345678"
+              <strong>Ejemplo:</strong> &quot;Mi email es juan@ejemplo.com y mi cédula es CC: 12345678&quot;
             </span>
           </AlertDescription>
         </Alert>
@@ -475,7 +475,7 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
                   variant="outline"
                   size="sm"
                   className="text-xs h-7 px-2"
-                  onClick={() => setInputMessage("Mi email es juan.perez@ejemplo.com y necesito ayuda legal")}
+                  onClick={() => setInputMessage('Mi email es juan.perez@ejemplo.com y necesito ayuda legal')}
                 >
                   Probar con Email
                 </Button>
@@ -483,7 +483,7 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
                   variant="outline"
                   size="sm"
                   className="text-xs h-7 px-2"
-                  onClick={() => setInputMessage("Mi cédula es CC: 12345678 y mi teléfono +57 300 123 4567")}
+                  onClick={() => setInputMessage('Mi cédula es CC: 12345678 y mi teléfono +57 300 123 4567')}
                 >
                   Probar con Cédula y Teléfono
                 </Button>
@@ -491,7 +491,7 @@ Estoy aquí para ayudarte de la manera más efectiva posible. 🏛️⚖️`
                   variant="outline"
                   size="sm"
                   className="text-xs h-7 px-2"
-                  onClick={() => setInputMessage("Soy Dr. María González, mi dirección es Calle 123 #45-67")}
+                  onClick={() => setInputMessage('Soy Dr. María González, mi dirección es Calle 123 #45-67')}
                 >
                   Probar con Nombre y Dirección
                 </Button>
